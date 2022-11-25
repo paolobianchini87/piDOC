@@ -1,5 +1,5 @@
 # The deep learning algorithm π-DOC
-## predicting dynamical mass, age, distance of globular clusters
+## --- Predicting dynamical mass, age, and distance of globular clusters ---
 
 π-DOC is a deep-learning algorithm designed to estimate properites of globular clusters starting from their photometric properites. In particular π-DOC measures:
 - the dynamical mass distribution of a cluster
