@@ -1,6 +1,6 @@
 ''' Series of functions used to:
 1) predict mass, age and distance of a series of simulated clusters observations (test set) using pi-DOC:
-function: make_prediciton()
+function: make_prediction()
 2) plot the figures comparing true expected values and predicted values
 functions: display_mosaic_prediction(), display_predicted_vs_true_mass(), display_predicted_vs_true_total_mass(), display_predicted_vs_true_age(), pdf_distances()
 '''
@@ -50,14 +50,14 @@ def make_predictions(pathtrained,pathinput,pathprediction,L_testset):
     print('*******  compute predictions with pi-DOC  ********\n')
     print('total number of maps used as input:', maps_tot)
     
-    #make mass predicitons for all the training set, giving (standardized) luminsoity maps as input
+    #make mass predictions for all the training set, giving (standardized) luminsoity maps as input
     start_CED_prediction = time.time()
 
     print('- - - - - - - - - - - - - - - - - - - - - - - - - ')
     print('              start mass predictions              ')
     print('- - - - - - - - - - - - - - - - - - - - - - - - \n')
     prediction  =  trained_network.predict(L)
-    #put the mass prediciton in original (de-standardized) form
+    #put the mass prediction in original (de-standardized) form
     mean_M=np.load(pathinput+'standardization_files/meanmasstrain.npy') #mean to be used, issued from the training set
     std_M=np.load(pathinput+'standardization_files/stdmasstrain.npy') #standard deviation to be used, issued from the training set
     prediction=(prediction*std_M)+mean_M
@@ -80,13 +80,13 @@ def make_predictions(pathtrained,pathinput,pathprediction,L_testset):
     trained_network.load_weights(pathtrained+name_CNN) #this is the trained model
     # print('Weights loaded')
 
-    #make distance and age predicitons for all the training set, giving (standardized) luminsoity maps as input
+    #make distance and age predictions for all the training set, giving (standardized) luminsoity maps as input
     start_CNN_prediction = time.time()
     print('- - - - - - - - - - - - - - - - - - - - - - - - - ')
     print('       start distance and age predictions         ')
     print('- - - - - - - - - - - - - - - - - - - - - - - - - \n')
     prediction_distance_age  =  trained_network.predict(L)
-    #put the age and distance predicitons in original (de-standardized) form
+    #put the age and distance predictions in original (de-standardized) form
     mean_d_age=np.load(pathinput+'standardization_files/mean_distance_age_train.npy')  #mean to be used, issued from the training set
     std_d_age=np.load(pathinput+'standardization_files/std_distance_age_train.npy') #standard deviation to be used, issued from the training set
     prediction_distance_age = (prediction_distance_age*std_d_age)+mean_d_age
@@ -103,7 +103,7 @@ def make_predictions(pathtrained,pathinput,pathprediction,L_testset):
 
 def display_mosaic_prediction(pathimage,L_testset,M_testset,distanceage_testset,prediction_M,prediction_distance_age):
     '''Displays a mosaic of 4 maps next to each other, the first row being the flux mass (used as input of pi-DOC), the second row is the true mass map and the third row the predicted mass map. True and predicted age/distance are plotted as labels.
-    pathimage: location of the saved figure with the name of "mosaic_predicitons_maps.png"
+    pathimage: location of the saved figure with the name of "mosaic_predictions_maps.png"
     L_testset: input flux maps
     M_testset: true mass maps of the input luminosity maps
     distanceage_testset: true distances and age of the input luminosity maps
@@ -115,7 +115,7 @@ def display_mosaic_prediction(pathimage,L_testset,M_testset,distanceage_testset,
     age_font = {'size':'5.5','color':'red'}
     map_label_font = {'size':'7','color':'white'}
     
-    #select randomly 4 maps for which you will plot the predicitons
+    #select randomly 4 maps for which you will plot the predictions
     n = 4
     maps_tot=np.shape(M_testset)[0]
     start_maps = random.sample(range(0, maps_tot), n)
@@ -140,7 +140,7 @@ def display_mosaic_prediction(pathimage,L_testset,M_testset,distanceage_testset,
         ax[1,0].text(-10,17,'Real mass',title_font)
         ax[1,0].set_ylabel('y (arcsec)')
        
-        #plot the 4 corresponding predicited mass maps from pi-DOC + labels with their predicted distance and age values
+        #plot the 4 corresponding predicted mass maps from pi-DOC + labels with their predicted distance and age values
         im3 = ax[2,j].imshow(prediction_M[start_maps[j],:,:,0],extent = [-20,20,-20,20],cmap = 'gist_heat',vmin = -1.5,vmax = 0.75)
         ax[2,0].text(-13,17,'Predicted mass',title_font)
         ax[2,0].set_ylabel('y (arcsec)')
@@ -164,9 +164,9 @@ def display_mosaic_prediction(pathimage,L_testset,M_testset,distanceage_testset,
     colorbar(im3,'$log_{10}(M/M_{\\odot})$')
     plt.subplots_adjust(wspace = 0,hspace = 0)
     plt.suptitle('Top: V-band flux maps \n Middle: true mass maps, distance and age \n Bottom: predicted mass maps, distance and age',fontsize=10)
-    plt.savefig(pathimage+'mosaic_predicitons_maps_{}-{}-{}-{}.png'.format(start_maps[0],start_maps[1],start_maps[2],start_maps[3]),dpi=300)
+    plt.savefig(pathimage+'mosaic_predictions_maps_{}-{}-{}-{}.png'.format(start_maps[0],start_maps[1],start_maps[2],start_maps[3]),dpi=300)
     
-    print('--> Figure of 4 mass maps, with distance and age predicitons saved: '+pathimage+'mosaic_predicitons_maps_{}-{}-{}-{}.png'.format(start_maps[0],start_maps[1],start_maps[2],start_maps[3]))
+    print('--> Figure of 4 mass maps, with distance and age predictions saved: '+pathimage+'mosaic_predictions_maps_{}-{}-{}-{}.png'.format(start_maps[0],start_maps[1],start_maps[2],start_maps[3]))
     return
 
 
@@ -400,7 +400,7 @@ def display_predicted_vs_true_age(pathimage,distanceage_testset,distanceage_pred
     plt.clf()
     
     age_testset=distanceage_testset[:,1]  #select only the age of the testset
-    age_prediction=distanceage_prediction[:,1] #select only the age of the predicitons
+    age_prediction=distanceage_prediction[:,1] #select only the age of the predictions
 
     #define the bins and the limits of the 2D histogram
     nbrbin = 20
@@ -504,9 +504,9 @@ def pdf_distances(pathimage,distanceage_testset,distanceage_prediction):
     '''
 
     distance_testset=distanceage_testset[:,0]  #select only the distance of the testset
-    distance_prediction=distanceage_prediction[:,0] #select only the distance of the predicitons
+    distance_prediction=distanceage_prediction[:,0] #select only the distance of the predictions
     
-    # divide the predicitons according their corresponding real distances (15, 30, 60, 80 kpc)
+    # divide the predictions according their corresponding real distances (15, 30, 60, 80 kpc)
     indices15 = np.where(distance_testset == 15.)
     predist15 = distance_prediction[indices15]
     indices30 = np.where(distance_testset == 30.)

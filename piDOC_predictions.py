@@ -24,10 +24,10 @@ Inputs:
     input_files/distance_age_testset.npy: ture distance in kpc and age in Gyr for each of the 100 maps above
 Outputs:
 in predictions/:
-    --> Predicitons of π-DOC:
+    --> Predictions of π-DOC:
     "predictionM.npy" and "predictiondistance_age.npy": predcited mass maps and predicated distance and age (same format as input files)
     --> Figures:
-     - mosaic_predicitons_maps.png
+     - mosaic_predictions_maps.png
      - Mass_map_true_vs_predicted.png
      - Total_mass_map_true_vs_predicted.png
      - Age_true_vs_predicted.png
