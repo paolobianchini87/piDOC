@@ -4,17 +4,17 @@ The algorithm is presented in: Chardin & Bianchini 2021 (C&B21), MNRAS, 504, 565
 Contributions to the code:
 Paolo Bianchini, December '22
 Vincent Duret, July '21
-Jonathan Chardin & Paolo Bianchini,  April '21
+Jonathan Chardin & Paolo Bianchini, April '21
 
 Description:
 The deep learning algorithm π-DOC predicts the dynamical mass distribution of a globular cluster, its age and its distance, taking as a input a V-band flux map of a cluster.
-This python code demonstrates the application of π-DOC on a set of mock V-band observations of globular clusters, subsample of the test set described in C&B21, Section 2.3.
+This python code demonstrates the application of π-DOC on a set of 100 mock V-band observations of globular clusters, subsample of the test set described in C&B21, Section 2.3.
 It uses the following functions (from functions.py):
     --> Application of the algorithm π-DOC on 100 input flux maps:
     (1) make_predictions(), to predict mass map, age and distance from a cluster flux map
     (2) display_mosaic_prediction(), to plot the predicted properties vs. the real properties for 4 randomly selected cases
     --> Plot and compute the performances of π-DOC on the entire sample of 100 input maps:
-    (3) display_predicted_vs_true_mass(), to plot the pixel-by-pixel predicted mass values vs, the expected ones
+    (3) display_predicted_vs_true_mass(), to plot the pixel-by-pixel predicted mass values vs. the expected ones
     (4) display_predicted_vs_true_total_mass(), to plot the predicted total mass values vs. the expected ones
     (5) display_predicted_vs_true_age(), to plot the predicted ages vs. the expected ones
     (6) pdf_distances(), to plot the predicted distances vs. the expected ones
@@ -37,7 +37,6 @@ in predictions/:
      - predicted_vs_true_total_mass.txt
      - predicted_vs_true_age.txt
      - distance_predictions_stats.txt
-Run: python3 piDOC_prediction.py
 '''
 
 
@@ -64,6 +63,7 @@ L_testset=np.load(pathtestset+'luminosity_V_testset.npy')
 M_testset=np.load(pathtestset+'mass_testset.npy')
 distanceage_testset=np.load(pathtestset+'distance_age_testset.npy')
 
+
 # this is the trained algorithm π-DOC, it predict the mass map, age and distance of given input luminosity maps
 # it saves the mass predictions and the distance/age predictions in the files: pathprediction/predictiondistance_age.npy and pathprediction/predictiondistance_age.npy
 make_predictions(pathtrained,pathtestset,pathprediction,L_testset)
@@ -73,7 +73,7 @@ make_predictions(pathtrained,pathtestset,pathprediction,L_testset)
 prediction_M=np.load(pathprediction+'predictionM.npy')
 prediction_distanceage=np.load(pathprediction+'predictiondistance_age.npy')
 
-# plot 4 maps (chosen randomly from the test set sample) and their corresponding predicitons (equivalebt of Fig. 4 of C&B21)
+# plot 4 maps (chosen randomly from the input sample) and their corresponding predicitons (equivalebt of Fig. 4 of C&B21)
 display_mosaic_prediction(pathprediction,L_testset,M_testset,distanceage_testset,prediction_M,prediction_distanceage)
 
 ''' ---> SECOND PART:'''

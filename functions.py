@@ -27,7 +27,7 @@ def make_predictions(pathtrained,pathinput,pathprediction,L_testset):
     pathprediction : path of the directory in which to save the predictions
     L_testset : flux maps of the test set that are to be used as input of pi-DOC
     '''
-
+    
 # Mass predictions from Convolutional Encoder-Decoer (CED) of pi-DOC
     #name of the trained algorithm
     name_CED='CED_200.h5'
@@ -39,7 +39,7 @@ def make_predictions(pathtrained,pathinput,pathprediction,L_testset):
     # load weights into new model
     trained_network.load_weights(pathtrained+name_CED) #this is the trained model
 
-    #put the test set in standardized form (the algorithm was trained with a standardized data set; see Section 3 of C&B2021 )
+    #put the input in standardized form (the algorithm was trained with a standardized data set; see Section 3 of C&B2021 )
     mean_L=np.load(pathinput+'standardization_files/meanluminosityVtrain.npy') #mean to be used, issued from the training set
     std_L=np.load(pathinput+'standardization_files/stdluminosityVtrain.npy') #standard deviation to be used, issued from the training set
     L=L_testset
@@ -78,7 +78,6 @@ def make_predictions(pathtrained,pathinput,pathprediction,L_testset):
     trained_network  =  model_from_json(loaded_model_json)
     # load weights into new model
     trained_network.load_weights(pathtrained+name_CNN) #this is the trained model
-    # print('Weights loaded')
 
     #make distance and age predictions for all the training set, giving (standardized) luminsoity maps as input
     start_CNN_prediction = time.time()
@@ -240,8 +239,6 @@ def display_predicted_vs_true_mass(pathimage,M_testset,prediction_M):
     table = [['Avg % error','Min % error','Max % error'],[meanerrory_all,minerrory_all,maxerrory_all]]
     with open(pathimage+'predicted_vs_true_mass.txt', 'w') as f:
         f.write(tabulate(table,headers = 'firstrow'))
-
-
 
     # Display the figure
     X,Y = np.meshgrid(xedges,yedges)
