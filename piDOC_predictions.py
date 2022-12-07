@@ -86,3 +86,6 @@ display_predicted_vs_true_total_mass(pathprediction,M_testset,prediction_M)
 display_predicted_vs_true_age(pathprediction,distanceage_testset,prediction_distanceage)
 # plot the distribution of predictd distances (equivalent to Fig. 9 of C&B21)
 pdf_distances(pathprediction,distanceage_testset,prediction_distanceage)
+
+
+
