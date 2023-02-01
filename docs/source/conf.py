@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = '$\pi$-DOC'
+project = 'pi-DOC'
 copyright = '2023, Paolo Bianchini'
 author = 'Paolo Bianchini'
 
