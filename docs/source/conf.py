@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'π-DOC'
+copyright = '2023, Paolo Bianchini'
+author = 'Paolo Bianchini'
 
 release = '0.1'
 version = '0.1.0'
